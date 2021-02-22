@@ -1,0 +1,68 @@
+{% extends "form-base.html" %}
+
+{% block title %}
+    Transactions
+{% endblock %}
+
+
+{% block footer_scripts %}
+    {{ super() }}
+    <script src="/static/js/tables/transactions.js"></script>
+{% endblock %}
+
+{% block header_text %}
+    Transactions
+{% endblock %}
+
+{% block input_form_action %}transactions{% endblock %}
+
+{% block input_form_type %}
+<select class="form-control shadow" name="category" id="category">
+    {% for cat in categorys %}
+    <option value="{{cat}}">{{cat}}</option>
+    {% endfor %}
+</select>
+{% endblock %}
+
+{% block input_form_1_sise %}2{% endblock %}
+{% block input_form_2_sise %}2{% endblock %}
+{% block input_form_3_sise %}3{% endblock %}
+{% block input_form_4_sise %}5{% endblock %}
+
+
+{% block table_header %}
+    <th class="col-sm-2">Amount</th>
+    <th class="col-sm-2">Category</th>
+    <th class="col-sm-3">Date</th>
+    <th class="col-sm-3">Description</th>
+{% endblock %}
+
+
+{% block table_body %}
+    {% for i in range(1, 15) %}
+    <tr class="row text-center m-0">
+        <td class="col-sm-2">${{ i**2 }}.45</td>
+        <td class="col-sm-2">Food</td>
+        <td class="col-sm-3 date">2021-02-{{ i }}</td>
+        <td class="col-sm-3">Pizza Hut</td>
+    </tr>
+    <tr class="row text-center m-0">
+        <td class="col-sm-2">${{ i**2 *2 }}.45</td>
+        <td class="col-sm-2">Rent</td>
+        <td class="col-sm-3 date">2021-02-{{ i }}</td>
+        <td class="col-sm-3">Pizza Hut</td>
+    </tr>
+    <tr class="row text-center m-0">
+        <td class="col-sm-2">${{ i**2 *3 }}.45</td>
+        <td class="col-sm-2">Phone</td>
+        <td class="col-sm-3 date">2021-02-{{ i }}</td>
+        <td class="col-sm-3">Pizza Hut</td>
+    </tr>
+    <tr class="row text-center m-0">
+        <td class="col-sm-2">${{ i**2 *4 }}.45</td>
+        <td class="col-sm-2">Missilaneous</td>
+        <td class="col-sm-3 date">2021-02-{{ i }}</td>
+        <td class="col-sm-3">Pizza Hut</td>
+    </tr>
+    {% endfor %}
+{% endblock %}

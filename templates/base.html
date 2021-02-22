@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Budget{% endblock %}</title>
+    <!-- define a block for bootstrap imports -->
+    {% block bootstrap %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {% endblock %}
+    {% block icons %}
+    <!-- Add icon library -->
+    <script src="https://kit.fontawesome.com/77ddb78ecd.js" crossorigin="anonymous"></script>
+    <!-- Add font library -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap" rel="stylesheet">
+    {% endblock %}
+    <!-- define a block for custom css -->
+    {% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% endblock %}
+    {% block header_scripts %}
+    <script src="{{ url_for('static', filename='js/script.js') }}" charset="utf-8"></script>
+    {% endblock %}
+    <link rel="icon"
+        type="image/png"
+        href="/static/img/money-icon.png">
+</head>
+<body class="bg-light">
+    <div class="main-body">
+        <header>
+            {% block header %}
+            <nav class="navbar navbar-expand-lg navbar-dark nav-background pt-4">
+                <div class="container">
+                    <a class="navbar-brand btn bg-success rounded-pill" href="{{ url_for('home') }}">OVERVIEW</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav navbar-right ml-auto">
+                           <li class="nav-item nav-btn-normal" id="first-nav-item"><a class="rounded-pill btn" href="/transactions/">Transactions</a></li>
+                           <li class="nav-item nav-btn-normal"><a class="rounded-pill btn" href="/income/">Income</a></li>
+                           <li class="nav-item nav-btn-normal"><a class="rounded-pill btn" href="/assets/">Assets</a></li>
+                           <li class="nav-item nav-btn-normal" id="last-nav-item"><a class="rounded-pill btn" href="/budget/">Budget</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            {% endblock %}
+        </header>
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+
+
+        <main class="text-light pt-4 pb-3 container pl-2 pr-2">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+    {% block footer %}
+    {% endblock %}
+    {% block footer_scripts %}
+    {% endblock %}
+</body>
+</html>

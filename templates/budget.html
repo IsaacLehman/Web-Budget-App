@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Budget
+{% endblock %}
+
+{% block header_scripts %}
+{{ super() }}
+<script src="/static/js/tables/date-filter.js"></script>
+{% endblock %}
+
+{% block footer_scripts %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.bundle.min.js"></script>
+<script src="/static/js/random-color.js"></script>
+<script src="/static/js/bootstable_2.js"></script>
+<script src="/static/js/tables/budget.js"></script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row mb-4 justify-content-center">
+    <h1 class="display-1 text-light text-center w-50">Budget</h1>
+</div>
+
+
+<!-- Stats -->
+<div class="container mb-4">
+    <div class="row justify-content-center">
+        <!-- Overview -->
+        <div class="col-lg-12 mb-4">
+            <fieldset class="rounded shadow">
+                <legend>Overview</legend>
+                <table  class="table text-light text-center">
+                    <tr class="borderless mt-0">
+                        <th class="h5">Monthly</th>
+                        <td id="month-total" class="h5"></td>
+                        <th class="h5">Yearly</th>
+                        <td id="year-total" class="h5"></td>
+                    </tr>
+                    <tr>
+                        <th class="h5">Monthly x12</th>
+                        <td id="month-x12-total" class="h5"></td>
+                        <th class="text-warning h5">Total Budgeted</th>
+                        <td id="combined-total" class="text-warning h5"></td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-2">
+    <div class="row justify-content-center">
+        <!-- Monthly -->
+        <div class="col-lg-6 mb-4">
+            <!-- Heading -->
+            <h2 class="display-4 text-light text-center mb-3">Monthly</h2>
+            <!-- Form -->
+            <form id="month_form" action="/budget-insert/"  onsubmit="submit_month_function(event); return false;">
+                <div class="form-row">
+
+                    <!-- Amount -->
+                    <div class="form-group col-sm-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend shadow">
+                                <div class="input-group-text">$</div>
+                            </div>
+                            <input class="form-control currency rounded-right shadow" type="number" id="m-amount" step="0.01" name="amount" value="" placeholder="Amount" required>
+                        </div>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="form-group col-sm-6">
+                        <input class="form-control shadow" type="text" name="category-month" id="category-month"value="" placeholder="Category" required>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                      <button type="submit" id="add_btn_m" class="btn btn-success shadow">Add</button>
+                    </div>
+                </div>
+            </form>
+            <!-- Table -->
+            <table id="monthly-table" class="table table-striped table-light table-hover rounded shadow">
+                <thead class="thead-dark text-center">
+                    <tr class="row table-header ">
+                        <th class="col-sm-4">Amount</th>
+                        <th class="col-sm-5">Category</th>
+                    </tr>
+                </thead>
+                <tbody id="month-table">
+                    {% for row in rowsm %}
+                    <tr class="row text-center m-0" term={{ row["term"] }} name={{ row["category"] }}>
+                        <td class="col-sm-4">{{ "$%.2f"|format(row["amount"]) }}</td>
+                        <td class="col-sm-5">{{ row["category"] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Yearly -->
+        <div class="col-lg-6 mb-4">
+            <!-- Heading -->
+            <h2 class="display-4 text-light text-center  mb-3">Yearly</h2>
+            <!-- Form -->
+            <form id="year_form" action="/budget-insert/"  onsubmit="submit_year_function(event); return false;">
+                <div class="form-row">
+
+                    <!-- Amount -->
+                    <div class="form-group col-sm-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend shadow">
+                                <div class="input-group-text">$</div>
+                            </div>
+                            <input class="form-control currency rounded-right shadow" type="number" id="y-amount" step="0.01" name="amount" value="" placeholder="Amount" required>
+                        </div>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="form-group col-sm-6">
+                        <input class="form-control shadow" type="text" name="category-month" id="category-year"value="" placeholder="Category" required>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                      <button type="submit" id="add_btn_y" class="btn btn-success shadow">Add</button>
+                    </div>
+                </div>
+            </form>
+            <!-- Table -->
+            <table id="yearly-table" class="table table-striped table-light table-hover rounded shadow">
+                <thead class="thead-dark text-center">
+                    <tr class="row table-header ">
+                        <th class="col-sm-4">Amount</th>
+                        <th class="col-sm-5">Category</th>
+                    </tr>
+                </thead>
+                <tbody id="year-table">
+                    {% for row in rowsy %}
+                    <tr class="row text-center m-0" term={{ row["term"] }} name={{ row["category"] }}>
+                        <td class="col-sm-4">{{ "$%.2f"|format(row["amount"]) }}</td>
+                        <td class="col-sm-5">{{ row["category"] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

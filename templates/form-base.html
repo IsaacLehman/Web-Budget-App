@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block header_scripts %}
+{{ super() }}
+<script src="/static/js/tables/date-filter.js"></script>
+{% endblock %}
+
+{% block footer_scripts %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.bundle.min.js"></script>
+<script src="/static/js/random-color.js"></script>
+<script src="/static/js/bootstable.js"></script>
+<script src="/static/js/tables/chart_code.js"></script>
+<script src="/static/js/form_validate.js"></script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container mb-4">
+    <h1 class="display-1 text-light text-center">{% block header_text %}{% endblock %}</h1>
+</div>
+
+<div class="container mb-2">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 mb-4">
+            <canvas id="lineChart"></canvas>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-3">
+    <form id="transaction_form" action="/{% block input_form_action %}{% endblock %}/" class="needs-validation" novalidate onsubmit="submit_function(event); return false;">
+        <div class="form-row">
+
+            <div class="form-group col-sm-{% block input_form_1_sise %}{% endblock %}">
+                <div class="input-group">
+                    <div class="input-group-prepend shadow">
+                        <div class="input-group-text">$</div>
+                    </div>
+                    <input class="form-control currency rounded-right shadow" type="number" id="amount" step="0.01" name="amount" value="" placeholder="Amount" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please set amount.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-{% block input_form_2_sise %}{% endblock %}">
+                {% block input_form_type %}{% endblock %}
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please choose a category.
+                </div>
+            </div>
+
+            <div class="form-group col-sm-{% block input_form_3_sise %}{% endblock %}">
+                <input class="form-control shadow" type="date" id="date" name="date" value="" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please choose a date.
+                </div>
+            </div>
+
+            {% block input_form_description %}
+            <div class="form-group col-sm-{% block input_form_4_sise %}{% endblock %}">
+                <input class="form-control shadow" type="text" id="description" name="description" value="" placeholder="Description" >
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            {% endblock %}
+
+
+        </div>
+        <div class="form-group row">
+            <div class="col">
+              <button type="submit" id="add_btn" class="btn btn-success shadow">Add</button>
+            </div>
+            <div class="ml-auto pr-3">
+                <select class="date-select form-control shadow" onchange="dateFilter(event);updateGraphs();">
+                    <option value="-1">Filter Data</option>
+                    <option value="7">Last Week</option>
+                    <option value="14">Last 2 Weeks</option>
+                    <option value="30">Last 30 Days</option>
+                    <option value="365">Last Year</option>
+                    <option value="-1">All</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+<div class="container">
+    <table id="transaction-table" class="table table-striped table-light table-hover rounded shadow">
+        <thead class="thead-dark text-center">
+            <tr class="row table-header ">
+                {% block table_header %}
+                {% endblock %}
+            </tr>
+        </thead>
+        <tbody>
+            {% block table_body %}
+            {% endblock %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

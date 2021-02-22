@@ -1,0 +1,51 @@
+{% extends "form-base.html" %}
+
+{% block title %}
+    Income
+{% endblock %}
+
+
+{% block footer_scripts %}
+    {{ super() }}
+    <script src="/static/js/tables/income.js"></script>
+{% endblock %}
+
+{% block header_text %}
+    Income
+{% endblock %}
+
+{% block input_form_action %}income-insert{% endblock %}
+
+{% block input_form_type %}
+<select class="form-control shadow" id="category" name="category">
+    <option value="Isaac's Pay">Isaac's Pay</option>
+    <option value="Moriah's Pay">Moriah's Pay</option>
+    <option value="Gift">Gift</option>
+    <option value="Other">Other</option>
+</select>
+{% endblock %}
+
+{% block input_form_1_sise %}2{% endblock %}
+{% block input_form_2_sise %}2{% endblock %}
+{% block input_form_3_sise %}3{% endblock %}
+{% block input_form_4_sise %}5{% endblock %}
+
+
+{% block table_header %}
+    <th class="col-sm-2">Amount</th>
+    <th class="col-sm-2">Type</th>
+    <th class="col-sm-3 date">Date</th>
+    <th class="col-sm-3">Description</th>
+{% endblock %}
+
+
+{% block table_body %}
+    {% for row in rows %}
+    <tr class="row text-center m-0" name={{ row["id"] }}>
+        <td class="col-sm-2">{{ "$%.2f"|format(row["amount"]) }}</td>
+        <td class="col-sm-2">{{ row["category"] }}</td>
+        <td class="col-sm-3 date">{{ row["date"] }}</td>
+        <td class="col-sm-3">{{ row["description"] }}</td>
+    </tr>
+    {% endfor %}
+{% endblock %}

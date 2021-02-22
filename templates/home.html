@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ super() }}
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+{% endblock %}
+
+{% block header_scripts %}
+{{ super() }}
+{% endblock %}
+
+
+{% block content %}
+<div class="">
+    <h1 class="display-1 text-light text-center">Your Money</h1>
+</div>
+
+<div class="rounded bg-light shadow">
+    <h1 class="display-1 text-dark text-center">Your Content</h1>
+    <h1 class="display-2 text-dark text-center">More Content</h1>
+    <h1 class="display-3 text-dark text-center">Even More Content</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="mt-2 col-sm-5 rounded bg-light text-dark shadow">
+            Content
+        </div>
+        <div class="mt-2 col-sm-5 ml-auto rounded bg-light text-dark shadow">
+            Content
+        </div>
+    </div>
+</div>
+
+{% endblock %}

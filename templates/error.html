@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ super() }}
+{% endblock %}
+
+{% block logged_out %}
+    {% if session.signed_in %}
+    {% else %}
+        {{ super() }}
+    {% endif %}
+{% endblock %}
+
+{% block logged_in %}
+    {% if session.signed_in %}
+        {{ super() }}
+    {% else %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container pt-5">
+    <h1 class="display3 text-center">{{ description }}</h1>
+</div>
+{% endblock %}

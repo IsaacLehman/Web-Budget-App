@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ super() }} - test
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+{% endblock %}
+
+{% block header_scripts %}
+{{ super() }}
+{% endblock %}
+
+{% block footer_scripts %}
+{{ super() }}
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+    .drag_item {
+        width: 200px;
+        height: 50px;
+        background-color: red;
+    }
+    .drag_container {
+        width: 210px;
+        height: 60px;
+        margin: 10px;
+        border: 1px dashed #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .drag_box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .drag_box_container {
+        min-width: 500px;
+    }
+</style>
+<script>
+    function createDiv(parentNode) {
+        let div = document.createElement('div');
+        div.setAttribute('class', 'col-6 drag_box');
+        div.innerHTML = '<div class="drag_container rounded" ondrop="drop(event)" ondragover="allowDrop(event)"></div>';
+        parentNode.appendChild(div);
+    }
+
+    function removeDiv(div) {
+        div.remove();
+    }
+
+
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function drag(ev) {
+        // get data
+        let targetNode = ev.target;                              // get the target node (drag_container)
+        let targetNodeParent = targetNode.parentElement;         // get the target node (drag_box)
+        let targetNodeContainer = targetNodeParent.parentElement;// get the target node (drag_box_container)
+
+        // if the place dragged from was a (drag_box > drag_container) div, add
+        if( targetNodeContainer.classList.contains("drag_box") ) {
+            targetNodeContainer.id = "CurrentDrag";
+        }
+
+        ev.dataTransfer.setData("text", ev.target.id);         // set drag item id
+    }
+
+    function dragEnd(ev) {
+        ev.preventDefault();
+        // if dropType is none, the item wasn't dropped in a valid location
+        let dropType = ev.dataTransfer.dropEffect;
+
+        // if sourceParent.id = CurrentDrag remove it
+        let sourceParentContainer = ev.srcElement.parentElement.parentElement
+
+        if(dropType === "none" || sourceParentContainer.id === "CurrentDrag") {
+            // get data
+            let targetNode = ev.target;                              // get the target node (drag_container)
+            let targetNodeParent = targetNode.parentElement;         // get the target node (drag_box)
+            let targetNodeContainer = targetNodeParent.parentElement;// get the target node (drag_box_container)
+
+            // if the place dragged from was a (drag_box > drag_container) div, add
+            if( targetNodeContainer.classList.contains("drag_box") ) {
+                targetNodeContainer.id = ""; // remove the "CurrentDrag" id
+                console.log("tag removed");
+            }
+        }
+    }
+
+    function drop(ev) {
+        ev.preventDefault();                                     // prevent default behaivor (link opening)
+
+        // get data
+        let id = ev.dataTransfer.getData("text");                // Get the item transfered id
+        let targetNode = ev.target;                              // get the target node (drag_container)
+        let targetNodeParent = targetNode.parentElement;         // get the target node (drag_box)
+        let targetNodeContainer = targetNodeParent.parentElement;// get the target node (drag_box_container)
+
+        // check if (drag_box > drag_container) div already has an item
+        if (!targetNode.classList.contains("drag_container")) {
+            return;
+        }
+
+        // add dragged item to drag_container
+        targetNode.appendChild(document.getElementById(id));     // add the item transfered to the target element
+        targetNode.classList.add("bg-light");                    // makes spot white bg
+
+        // create a new (drag_box > drag_container) div
+        createDiv(targetNodeContainer);                          // create a new div for elements to be dragged to
+        console.log("div made");
+
+        // remove the (drag_box > drag_container) div the node was dragged from
+        let parentNode = document.getElementById("CurrentDrag"); // Select the node previous to the drop
+        if( parentNode != null && parentNode.classList.contains("drag_box") ) {
+            removeDiv(parentNode);                               // if a valid item to remove remove the item
+            console.log("div removed")
+        }
+    }
+</script>
+
+<div class="row bg-dark shadow rounded m-2 drag_box_container" id="btn_cont">
+
+    <div class="col-6 drag_box">
+        <div class="drag_container rounded" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    </div>
+
+</div>
+
+
+
+<br>
+<div id="myItem" class="drag_item" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">
+    <span>HUMA 301</span> <button class="btn" type="button" name="button"><i class="far fa-trash-alt"></i></button>
+</div>
+<img  id="fall-2020" class="drag_item" src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHw%3D&w=1000&q=80" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">
+<img  id="fall-2021" class="drag_item" src="https://www.searchenginejournal.com/wp-content/uploads/2018/10/How-to-Boost-Your-Images%E2%80%99-Visibility-on-Google-Images-760x400.png" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">
+<img  id="fall-2022" class="drag_item" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwGPF8X5lgcLBtUZUXV9kPPpfw7IuIsTq3uQ&usqp=CAU" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">
+
+<br>
+<br>
+
+<script type="text/javascript">
+    function toggleSidebar(ev) {
+        let btn = ev.target;
+        if(btn.classList.contains("selected"))  {
+            // close the nav bar
+            btn.classList.remove("selected");
+            btn.innerHTML = "Open";
+        } else {
+            btn.classList.add("selected");
+            btn.innerHTML = "closes";
+            // open the navbar
+        }
+
+    }
+</script>
+<button type="button" class="btn bg-dark text-light" onclick="toggleSidebar(event)">Toggle sidebar</button>
+{% endblock %}
