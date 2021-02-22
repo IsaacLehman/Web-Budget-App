@@ -401,8 +401,13 @@ def page_not_found_500(e):
     return render_template("error.html", code=500, description="Internal Server Error"), 500
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+
+if __name__ == '__main__':
+    # Threaded option to enable multiple instances for multiple user access support
+    app.run(threaded=True, port=5000)
+    
+#if __name__ == "__main__":
+#    app.run(debug=True)
 
 # Having debug=True allows possible Python errors to appear on the web page
 # run with $> python server.py
