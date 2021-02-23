@@ -3,6 +3,7 @@ Command==0.1.0
 Flask==1.1.2
 Flask-Moment==0.10.0
 Flask-Scss==0.5
+gunicorn==20.0.4
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
