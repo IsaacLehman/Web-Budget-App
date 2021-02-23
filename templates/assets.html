@@ -7,7 +7,7 @@
 
 {% block footer_scripts %}
     {{ super() }}
-    <script src="/static/js/tables/assets.js"></script>
+    <script src="{{ url_for('static', filename='js/tables/assets.js') }}"></script>
 {% endblock %}
 
 {% block header_text %}
