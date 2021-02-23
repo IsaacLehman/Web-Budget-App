@@ -6,7 +6,7 @@
 
 {% block header_scripts %}
 {{ super() }}
-<script src="/static/js/tables/date-filter.js"></script>
+<script src="{{ url_for('static', filename='js/tables/date-filter.js') }}"></script>
 {% endblock %}
 
 {% block footer_scripts %}
