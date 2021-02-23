@@ -2,16 +2,16 @@
 
 {% block header_scripts %}
 {{ super() }}
-<script src="/static/js/tables/date-filter.js"></script>
+<script src="{{ url_for('static', filename='js/tables/date-filter.js') }}"></script>
 {% endblock %}
 
 {% block footer_scripts %}
 {{ super() }}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.bundle.min.js"></script>
-<script src="/static/js/random-color.js"></script>
-<script src="/static/js/bootstable.js"></script>
-<script src="/static/js/tables/chart_code.js"></script>
-<script src="/static/js/form_validate.js"></script>
+<script src="{{ url_for('static', filename='js/random-color.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstable.js') }}"></script>
+<script src="{{ url_for('static', filename='js/tables/chart_code.js') }}"></script>
+<script src="{{ url_for('static', filename='js/tables/form_validate.js') }}"></script>
 {% endblock %}
 
 
