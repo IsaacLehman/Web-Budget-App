@@ -3,7 +3,10 @@ body{
 	background: #1f4037;  /* fallback for old browsers */
 	background: -webkit-linear-gradient(to right, #53ce94, #1f4037);  /* Chrome 10-25, Safari 5.1-6 */
 	background: linear-gradient(to right, #53ce94, #1f4037); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    /*background: linear-gradient(180deg, rgba(52,58,64,1) 0%, rgba(233,233,233,1) 86%, rgba(236,236,236,1) 100%);*/
+
+
+
+    /*background: linear-gradient(180deg, rgba(82, 88, 94,1) 0%, rgba(233,233,233,1) 86%, rgba(236,236,236,1) 100%);*/
 }
 
 /*
@@ -130,8 +133,7 @@ fieldset {
     padding-inline-end: 0.75em;
     padding-block-end: 0.625em;
     min-inline-size: min-content;
-	border: 2px solid #343a40;
-    /*border: 2px solid #f8f9fa;*/
+    border: 2px solid #343a40;
 }
 
 legend {
