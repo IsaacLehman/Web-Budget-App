@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Budget{% endblock %}</title>
+    <!-- define a block for bootstrap imports -->
+    {% block bootstrap %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {% endblock %}
+    {% block icons %}
+    <!-- Add icon library -->
+    <script src="https://kit.fontawesome.com/77ddb78ecd.js" crossorigin="anonymous"></script>
+    <!-- Add font library -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap" rel="stylesheet">
+    {% endblock %}
+    <!-- define a block for custom css -->
+    {% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
+    {% endblock %}
+    {% block header_scripts %}
+    <script src="{{ url_for('static', filename='js/script.js') }}" charset="utf-8"></script>
+    {% endblock %}
+    <link rel="icon" type="image/png" href="/static/img/money-icon.png">
+</head>
+<!--Coded with love by Mutiullah Samim-->
+
+<body>
+    <div class="container h-100">
+        <div class="d-flex justify-content-center h-100">
+            <div class="user_card">
+                <div class="d-flex justify-content-center">
+                    <div class="brand_logo_container">
+                        <img src="/static/img/money-icon.png" class="brand_logo" alt="Logo">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center form_container">
+                    <form action="/signup/" method="post">
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" name="username" class="form-control input_user" value="" placeholder="username">
+                        </div>
+                        <div class="input-group mb-5">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input type="password" name="password" class="form-control input_pass" value="" placeholder="password">
+                        </div>
+                        <div class="mt-0 mb-0">
+                            {% for message in get_flashed_messages() %}
+                            <div class="container alert alert-danger pt-1 pb-1">
+                                <button type="button" class="close" data-dismiss="alert"><i class="fas fa-times"></i></button>
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <button type="submit" name="button" class="btn btn-success login_btn">Create Account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

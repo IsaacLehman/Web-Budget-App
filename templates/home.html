@@ -5,33 +5,117 @@
 {% endblock %}
 
 {% block css %}
-{{ super() }}
-{% endblock %}
-
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">{% endblock %}
 {% block header_scripts %}
 {{ super() }}
 {% endblock %}
 
 
 {% block content %}
-<div class="">
-    <h1 class="display-1 text-light text-center">Your Money</h1>
+
+<div class="mb-5">
+    <h1 class="display-1 text-light text-center">Overview</h1>
 </div>
 
-<div class="rounded bg-light shadow">
-    <h1 class="display-1 text-dark text-center">Your Content</h1>
-    <h1 class="display-2 text-dark text-center">More Content</h1>
-    <h1 class="display-3 text-dark text-center">Even More Content</h1>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="mt-2 col-sm-5 rounded bg-light text-dark shadow">
-            Content
-        </div>
-        <div class="mt-2 col-sm-5 ml-auto rounded bg-light text-dark shadow">
-            Content
+
+<div class="container ">
+
+	<!-- Stats -->
+    <div class="container mb-4">
+        <h2 class="display-4 text-dark text-left">Budget</h2>
+        <div class="row justify-content-center">
+            <!-- Overview -->
+            <div class="col-lg-12 mb-4">
+                <fieldset class="rounded shadow">
+                    <legend class="text-light">Total Left: {{ "$%.2f"|format(totalSum-totalSumT) }}</legend>
+                    <table  class="table text-center text-light">
+                        <tr class="borderless mt-0">
+                            <th class="h5"></th>
+                            <td class="h5">Budgeted</td>
+							<td class="h5">Spent</td>
+                        </tr>
+						<tr>
+                            <th class="h5">Monthly</th>
+                            <td class="h5">{{ "$%.2f"|format(12.0*monthlySum) }}</td>
+							<td class="h5">{{ "$%.2f"|format(monthlySumT) }}</td>
+                        </tr>
+						<tr>
+                            <th class="h5">Yearly</th>
+                            <td class="h5">{{ "$%.2f"|format(yearlySum) }}</td>
+							<td class="h5">{{ "$%.2f"|format(yearlySumT) }}</td>
+                        </tr>
+						<tr class="text-warning" >
+                            <th class="h5">Total</th>
+                            <td class="h5">{{ "$%.2f"|format(totalSum) }}</td>
+							<td class="h5">{{ "$%.2f"|format(totalSumT) }}</td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
         </div>
     </div>
-</div>
 
+    {% if assetSums %}
+    <!-- Stats -->
+    <div class="container mb-4">
+        <h2 class="display-4 text-dark text-left">Assets</h2>
+        <div class="row justify-content-center">
+            <!-- Overview -->
+            <div class="col-lg-12 mb-4">
+                <fieldset class="rounded shadow">
+                    <legend class="text-light">Total: {{ "$%.2f"|format(assetSum) }}</legend>
+                    <table  class="table text-center text-light">
+                        <tr class="borderless mt-0">
+                        {% for i in range(assetSums|length) %}
+                            <th class="h5">{{ assetSums[i][1] }}</th>
+                            <td class="h5">{{ "$%.2f"|format(assetSums[i][0]) }}</td>
+                            {% if i %2 and i < assetSums|length - 1%}
+                            </tr>
+                            <tr>
+                            {% endif %}
+                        {% endfor %}
+						{% if assetSums|length %2 == 1 %}
+							<th class="h5"></th>
+                            <td class="h5"></td>
+						{% endif %} 
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if incomeSums %}
+    <!-- Stats -->
+    <div class="container mb-4">
+        <h2 class="display-4 text-dark text-left">Income</h2>
+        <div class="row justify-content-center">
+            <!-- Overview -->
+            <div class="col-lg-12 mb-4">
+                <fieldset class="rounded shadow">
+                    <legend class="text-light">Total: {{ "$%.2f"|format(incomeSum) }}</legend>
+                    <table  class="table text-center text-light">
+                        <tr class="borderless mt-0">
+                        {% for i in range(incomeSums|length) %}
+                            <th class="h5">{{ incomeSums[i][1] }}</th>
+                            <td class="h5">{{ "$%.2f"|format(incomeSums[i][0]) }}</td>
+                            {% if i %2 and i < incomeSums|length - 1 %}
+                            </tr>
+                            <tr>
+                            {% endif %}
+                        {% endfor %}
+						{% if incomeSums|length %2 == 1 %}
+							<th class="h5"></th>
+                            <td class="h5"></td>
+						{% endif %} 
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
 {% endblock %}

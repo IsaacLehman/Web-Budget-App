@@ -7,20 +7,27 @@
 
 {% block footer_scripts %}
     {{ super() }}
-    <script src="{{ url_for('static', filename='js/tables/transactions.js') }}"></script>
+    <script src="/static/js/tables/transactions.js"></script>
 {% endblock %}
 
 {% block header_text %}
     Transactions
 {% endblock %}
 
-{% block input_form_action %}transactions{% endblock %}
+{% block input_form_action %}transactions-insert{% endblock %}
 
 {% block input_form_type %}
 <select class="form-control shadow" name="category" id="category">
-    {% for cat in categorys %}
+    <optgroup label="Yearly">
+    {% for cat in categorysY %}
     <option value="{{cat}}">{{cat}}</option>
     {% endfor %}
+    </optgroup>
+    <optgroup label="Monthly">
+    {% for cat in categorysM %}
+    <option value="{{cat}}">{{cat}}</option>
+    {% endfor %}
+    </optgroup>
 </select>
 {% endblock %}
 
@@ -28,6 +35,26 @@
 {% block input_form_2_sise %}2{% endblock %}
 {% block input_form_3_sise %}3{% endblock %}
 {% block input_form_4_sise %}5{% endblock %}
+
+
+{% block filters %}
+    <div class="ml-auto pr-3">
+        <select class="date-select form-control shadow" name="category" onchange="categoryFilter(event);updateGraphs();">
+            <option value="-1">Filter Category</option>
+            <optgroup label="Yearly">
+            {% for cat in categorysY %}
+            <option value="{{cat}}">{{cat}}</option>
+            {% endfor %}
+            </optgroup>
+            <optgroup label="Monthly">
+            {% for cat in categorysM %}
+            <option value="{{cat}}">{{cat}}</option>
+            {% endfor %}
+            </optgroup>
+            <option value="-1">All</option>
+        </select>
+    </div>
+{% endblock %}
 
 
 {% block table_header %}
@@ -39,30 +66,12 @@
 
 
 {% block table_body %}
-    {% for i in range(1, 15) %}
-    <tr class="row text-center m-0">
-        <td class="col-sm-2">${{ i**2 }}.45</td>
-        <td class="col-sm-2">Food</td>
-        <td class="col-sm-3 date">2021-02-{{ i }}</td>
-        <td class="col-sm-3">Pizza Hut</td>
-    </tr>
-    <tr class="row text-center m-0">
-        <td class="col-sm-2">${{ i**2 *2 }}.45</td>
-        <td class="col-sm-2">Rent</td>
-        <td class="col-sm-3 date">2021-02-{{ i }}</td>
-        <td class="col-sm-3">Pizza Hut</td>
-    </tr>
-    <tr class="row text-center m-0">
-        <td class="col-sm-2">${{ i**2 *3 }}.45</td>
-        <td class="col-sm-2">Phone</td>
-        <td class="col-sm-3 date">2021-02-{{ i }}</td>
-        <td class="col-sm-3">Pizza Hut</td>
-    </tr>
-    <tr class="row text-center m-0">
-        <td class="col-sm-2">${{ i**2 *4 }}.45</td>
-        <td class="col-sm-2">Missilaneous</td>
-        <td class="col-sm-3 date">2021-02-{{ i }}</td>
-        <td class="col-sm-3">Pizza Hut</td>
+    {% for row in rows %}
+    <tr class="row text-center m-0" name={{ row["id"] }}>
+        <td class="col-sm-2">{{ "$%.2f"|format(row["amount"]) }}</td>
+        <td class="col-sm-2 category">{{ row["category"] }}</td>
+        <td class="col-sm-3 date">{{ row["date"] }}</td>
+        <td class="col-sm-3">{{ row["description"] }}</td>
     </tr>
     {% endfor %}
 {% endblock %}

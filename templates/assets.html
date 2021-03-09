@@ -7,7 +7,7 @@
 
 {% block footer_scripts %}
     {{ super() }}
-    <script src="{{ url_for('static', filename='js/tables/assets.js') }}"></script>
+    <script src="/static/js/tables/assets.js"></script>
 {% endblock %}
 
 {% block header_text %}
@@ -30,6 +30,20 @@
 {% block input_form_2_sise %}3{% endblock %}
 {% block input_form_3_sise %}4{% endblock %}
 
+{% block filters %}
+    <div class="ml-auto pr-3">
+        <select class="date-select form-control shadow" name="category" onchange="categoryFilter(event);updateGraphs(1);">
+            <option value="-1">Filter Category</option>
+            <option value="Checking">Checking</option>
+            <option value="Savings">Savings</option>
+            <option value="Emergency">Emergency</option>
+            <option value="Investing">Investing</option>
+            <option value="Missilaneous">Miscellaneous</option>
+            <option value="-1">All</option>
+        </select>
+    </div>
+{% endblock %}
+
 {% block input_form_description %}{% endblock %}
 
 
@@ -43,7 +57,7 @@
     {% for row in rows %}
     <tr class="row text-center m-0" name={{ row["id"] }}>
         <td class="col-sm-3">{{ "$%.2f"|format(row["balance"]) }}</td>
-        <td class="col-sm-3">{{ row["category"] }}</td>
+        <td class="col-sm-3 category">{{ row["category"] }}</td>
         <td class="col-sm-4 date">{{ row["date"] }}</td>
     </tr>
     {% endfor %}

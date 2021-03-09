@@ -2,16 +2,17 @@
 
 {% block header_scripts %}
 {{ super() }}
-<script src="{{ url_for('static', filename='js/tables/date-filter.js') }}"></script>
+<script src="/static/js/tables/date-filter.js"></script>
+<script src="/static/js/tables/category-filter.js"></script>
 {% endblock %}
 
 {% block footer_scripts %}
 {{ super() }}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.bundle.min.js"></script>
-<script src="{{ url_for('static', filename='js/random-color.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bootstable.js') }}"></script>
-<script src="{{ url_for('static', filename='js/tables/chart_code.js') }}"></script>
-<script src="{{ url_for('static', filename='js/tables/form_validate.js') }}"></script>
+<script src="/static/js/random-color.js"></script>
+<script src="/static/js/bootstable.js"></script>
+<script src="/static/js/tables/chart_code.js"></script>
+<script src="/static/js/form_validate.js"></script>
 {% endblock %}
 
 
@@ -23,11 +24,11 @@
 
 <div class="container mb-2">
     <div class="row justify-content-center">
-        <div class="col-lg-8 mb-4">
+        <div class=" col-sm-12 col-lg-8 mb-4">
             <canvas id="lineChart"></canvas>
         </div>
 
-        <div class="col-lg-4 mb-4">
+        <div class="col-sm-12 col-lg-4 mb-4">
             <canvas id="pieChart"></canvas>
         </div>
     </div>
@@ -87,9 +88,11 @@
             <div class="col">
               <button type="submit" id="add_btn" class="btn btn-success shadow">Add</button>
             </div>
+            {% block filters %}
+            {% endblock %}
             <div class="ml-auto pr-3">
                 <select class="date-select form-control shadow" onchange="dateFilter(event);updateGraphs();">
-                    <option value="-1">Filter Data</option>
+                    <option value="-1">Filter Date</option>
                     <option value="7">Last Week</option>
                     <option value="14">Last 2 Weeks</option>
                     <option value="30">Last 30 Days</option>
