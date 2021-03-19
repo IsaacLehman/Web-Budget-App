@@ -1,4 +1,4 @@
-# Web Budget App - [view live version](MoneyFlowIO.com)
+# Web Budget App - [view live version](http://MoneyFlowIO.com)
 A no frill, personal budget application designed to track your expenses and manage your assets.
 
 ### Distinct Notes:
